@@ -1,0 +1,16 @@
+untrusted/Wolfssl_Enclave_u.o: In function `wc_test':
+Wolfssl_Enclave_u.c:(.text+0x18f): undefined reference to `sgx_ecall'
+untrusted/Wolfssl_Enclave_u.o: In function `wc_benchmark_test':
+Wolfssl_Enclave_u.c:(.text+0x20d): undefined reference to `sgx_ecall'
+untrusted/Wolfssl_Enclave_u.o: In function `enc_wolfSSL_Init':
+Wolfssl_Enclave_u.c:(.text+0x27f): undefined reference to `sgx_ecall'
+untrusted/Wolfssl_Enclave_u.o: In function `enc_wolfSSL_Debugging_ON':
+Wolfssl_Enclave_u.c:(.text+0x2dc): undefined reference to `sgx_ecall'
+untrusted/Wolfssl_Enclave_u.o: In function `enc_wolfSSL_Debugging_OFF':
+Wolfssl_Enclave_u.c:(.text+0x30f): undefined reference to `sgx_ecall'
+untrusted/Wolfssl_Enclave_u.o:Wolfssl_Enclave_u.c:(.text+0x357): more undefined references to `sgx_ecall' follow
+untrusted/App.o: In function `main':
+App.c:(.text+0xb3): undefined reference to `init_lotr'
+collect2: error: ld returned 1 exit status
+make[1]: *** [App] Error 1
+make: *** [all] Error 2
