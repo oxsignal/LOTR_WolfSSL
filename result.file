@@ -1,5 +1,0 @@
-make -ef sgx_u.mk all
-make[1]: Entering directory '/home/signal/RING/wolfssl/wolfssl-examples/SGX_Linux_modified'
-sgx_u.mk:137: recipe for target 'App' failed
-make[1]: Leaving directory '/home/signal/RING/wolfssl/wolfssl-examples/SGX_Linux_modified'
-Makefile:13: recipe for target 'all' failed
