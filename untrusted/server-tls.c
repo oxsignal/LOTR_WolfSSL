@@ -50,7 +50,7 @@ int main()
     char               buff[256];
     size_t             len;
     int                shutdown = 0;
-
+    int                reuse = 1;
     /* declare wolfSSL objects */
     WOLFSSL_CTX* ctx;
     WOLFSSL*     ssl;
@@ -70,6 +70,8 @@ int main()
         return -1;
     }
 
+   if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &reuse,sizeof(reuse)) <0)
+	fprintf(stderr,"setsockopt(SO_REUSEADDR) failed");
 
 
     /* Create and initialize WOLFSSL_CTX */

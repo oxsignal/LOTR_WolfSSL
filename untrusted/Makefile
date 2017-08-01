@@ -3,7 +3,7 @@ ARC64 = -m64
 CFLAGS = -Wall -lm
 RM = rm -f
 CLIB_INCLUDE = /usr/local/include
-STATIC_LIB = wolfssl.lotr.gcc.x64.static.lib
+STATIC_LIB = wolfssl
 STATIC_LIB_DIR = ../lib
 DEBUG_FLAGS = -g -DDEBUG
 
