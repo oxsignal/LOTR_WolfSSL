@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) /* not using since just testing w/ wc_test */
         return 0;
 	}
 
-    memset(t, 0, sizeof(int));
+//    memset(t, 0, sizeof(int));
     memset(&args,0,sizeof(args));
 
           /////////////////

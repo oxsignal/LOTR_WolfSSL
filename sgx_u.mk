@@ -1,9 +1,9 @@
 ######## Intel(R) SGX SDK Settings ########
 UNTRUSTED_DIR=untrusted
-WOLFSSL_LIB =wolfssl.lotr.static.lib
+WOLFSSL_LIB = wolfssl.lotr.gcc.x64.static.lib
 ifeq ($(shell getconf LONG_BIT), 32)
 	SGX_ARCH := x86
-else ifeq ($(findstring -m32, $(CXXFLAGS)), -m32)
+else ifeq ($(findstring -m32, $(CXXFLAGS)), -m64)
 	SGX_ARCH := x86
 endif
 
@@ -73,7 +73,7 @@ else
         App_C_Flags += -DNDEBUG -UEDEBUG -UDEBUG
 endif
 
-App_Link_Flags := $(SGX_COMMON_CFLAGS) -l$(WOLFSSL_LIB)
+App_Link_Flags := $(SGX_COMMON_CFLAGS) -l$(WOLFSSL_LIB) -lm
 # -l$(Urts_Library_Name) -lpthread
 
 #ifneq ($(SGX_MODE), HW)
@@ -135,8 +135,7 @@ $(UNTRUSTED_DIR)/%.o: $(UNTRUSTED_DIR)/%.u
 	@echo "CC  <=  $<"
 
 App: $(App_C_Objects)
-	@echo $(CC) $^ $(App_Link_Flags) -o $@
-	@$(CC) $^ $(App_Link_Flags) -o $@ -L$(UNTRUSTED_DIR)
+	$(CC) $^ $(App_Link_Flags) -L$(UNTRUSTED_DIR) -o $@
 	@echo "LINK =>  $@"
 
 
