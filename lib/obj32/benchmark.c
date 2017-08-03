@@ -3794,29 +3794,4 @@ void benchmark_configure(int block_size)
     }
 }
 
-#ifndef NO_MAIN_DRIVER
-
-//int main(int argc, char** argv)
-//{
- //   int ret = 0;
-
-   // if (argc > 1) {
-        /* parse for block size */
-   //     benchmark_configure(atoi(argv[1]));
-   // }
-
-#ifdef HAVE_STACK_SIZE
-   // ret = StackSizeCheck(NULL, benchmark_test);
-#else
-   // ret = benchmark_test(NULL);
-#endif
-
-//    return ret;
-//}
-#endif /* !NO_MAIN_DRIVER */
-
-#else
-    #ifndef NO_MAIN_DRIVER
-  //      int main() { return 0; }
-    #endif
 #endif /* !NO_CRYPT_BENCHMARK */

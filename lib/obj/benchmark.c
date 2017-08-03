@@ -20,12 +20,9 @@
  */
 
 
-#include "test.h"
-#include <wolfssl/internal.h>
-#include <wolfssl/ssl.h>
-
-
 /* wolfCrypt benchmark */
+
+
 #ifdef HAVE_CONFIG_H
     #include <config.h>
 #endif
@@ -198,6 +195,8 @@
 
 #ifdef WOLFSSL_CURRTIME_REMAP
     #define current_time WOLFSSL_CURRTIME_REMAP
+#elif !defined(HAVE_STACK_SIZE)
+    double current_time(int);
 #endif
 
 #if defined(DEBUG_WOLFSSL) && !defined(HAVE_VALGRIND) && \
@@ -845,19 +844,19 @@ static void* benchmarks_do(void* args)
         #endif
     #endif
     #ifndef NO_SW_BENCH
-//        bench_rsa(0);
+        bench_rsa(0);
     #endif
     #if defined(WOLFSSL_ASYNC_CRYPT) && defined(WC_ASYNC_ENABLE_RSA)
-  //      bench_rsa(1);
+        bench_rsa(1);
     #endif
 #endif
 
 #ifndef NO_DH
     #ifndef NO_SW_BENCH
-  //      bench_dh(0);
+        bench_dh(0);
     #endif
     #if defined(WOLFSSL_ASYNC_CRYPT) && defined(WC_ASYNC_ENABLE_DH)
-    //    bench_dh(1);
+        bench_dh(1);
     #endif
 #endif
 
@@ -3649,6 +3648,29 @@ exit_ed_verify:
 #endif /* HAVE_ED25519 */
 
 #ifndef HAVE_STACK_SIZE
+#if defined(_WIN32) && !defined(INTIME_RTOS)
+
+    #define WIN32_LEAN_AND_MEAN
+    #include <windows.h>
+
+    double current_time(int reset)
+    {
+        static int init = 0;
+        static LARGE_INTEGER freq;
+
+        LARGE_INTEGER count;
+
+        (void)reset;
+
+        if (!init) {
+            QueryPerformanceFrequency(&freq);
+            init = 1;
+        }
+
+        QueryPerformanceCounter(&count);
+
+        return (double)count.QuadPart / freq.QuadPart;
+    }
 
 #elif defined MICROCHIP_PIC32
     #if defined(WOLFSSL_MICROCHIP_PIC32MZ)
@@ -3727,6 +3749,8 @@ exit_ed_verify:
 
         return time_now;
     }
+#elif defined(WOLFSSL_SGX)
+    double current_time(int reset);
 
 #else
 
@@ -3770,25 +3794,4 @@ void benchmark_configure(int block_size)
     }
 }
 
-
-int main(void)
-{
-    int ret = 0;
-    ret =benchmark_test(NULL);
-  
-    return 0;
-
-
-}
-
-/*
-#ifdef HAVE_STACK_SIZE
-    ret = StackSizeCheck(NULL, benchmark_test);
-#else
-    ret = benchmark_test(NULL);
-#endif
-
-    return ret;
-}
-*/
-
+#endif /* !NO_CRYPT_BENCHMARK */
