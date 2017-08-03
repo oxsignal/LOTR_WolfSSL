@@ -2,7 +2,7 @@ CC = cc
 ARC64 = -m64
 ARC32 = -m32
 CFLAGS = -Wall -lm -lpthread
-RM = rm -f
+RM = rm -rf
 STATIC_LIB = wolfssl
 STATIC_LIB32 = wolfssl32
 STATIC_LIB_DIR = ../lib
@@ -27,6 +27,7 @@ $(SERVER):
 	$(CC) -static -o $@ server-tls.c -L$(STATIC_LIB_DIR) -l$(STATIC_LIB) $(ARC64) $(CFLAGS) -I../../wolfssl
 
 $(BENCHMARK):
+	mkdir ../.libs
 	$(CC) -static -o $@ benchmark.c -L$(STATIC_LIB_DIR) -l$(STATIC_LIB) $(ARC64) $(STACKCFLAGS) -I../../wolfssl
 
 $(BENCHMARK32):
@@ -38,4 +39,4 @@ debug: all
 clean:
 	$(RM) $(CLIENT)
 	$(RM) $(SERVER)
-	$(RM) $(BENCHMARK_DIR)*
+	$(RM) $(BENCHMARK_DIR)
